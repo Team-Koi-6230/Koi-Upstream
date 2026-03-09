@@ -1,8 +1,9 @@
 package team6230.koiupstream.io;
 
 import org.littletonrobotics.junction.AutoLog;
+import org.littletonrobotics.junction.inputs.LoggableInputs;
 
-public interface UpstreamIO {
+public interface UpstreamIO<I extends LoggableInputs> {
     @AutoLog
     public static class UpstreamIOInputs {
         public double appliedVolts = 0.0;
@@ -10,5 +11,5 @@ public interface UpstreamIO {
         public double[] tempCelsius = new double[] {};
     }
 
-    public default void updateInputs(UpstreamIOInputs inputs) {}
+    public abstract void updateInputs(I inputs);
 }

@@ -3,11 +3,10 @@ package team6230.koiupstream.superstates;
 import java.util.logging.Logger;
 
 import edu.wpi.first.wpilibj.DriverStation;
-import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import team6230.koiupstream.subsystems.UpstreamSubsystem;
 
 /* YOU MUST ENSURE THIS IS THE FIRST SUBSYSTEM TO BE CREATED. PREFERABLE IN THE ROBOT INIT */
-public class Superstate extends SubsystemBase {
+public class Superstate {
     private static Superstate _instance;
     private final Logger logger = Logger.getLogger(Superstate.class.getName());
     
@@ -36,9 +35,13 @@ public class Superstate extends SubsystemBase {
     public void addSubsystem(UpstreamSubsystem subsystem) {
         if (_manager.isDefault()) {
             DriverStation.reportWarning("WARNING: Subsystem manager is using default states", false);
+            logger.warning("WARNING: Subsystem manager is using default states");
         }
         
-        // Passing the method reference and the boolean supplier
-        _manager.subscribe(subsystem::HandleSuperstate, subsystem::isReady);
+        _manager.subscribe(subsystem::handleSuperstate, subsystem::isReady);
+    }
+
+    public void updateLogic() {
+        _manager.periodic();
     }
 }
