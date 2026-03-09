@@ -11,14 +11,14 @@ import java.util.Map;
 import org.littletonrobotics.junction.Logger;
 import org.littletonrobotics.junction.inputs.LoggableInputs;
 
-public abstract class UpstreamSubsystem<S extends Enum<S>, I extends LoggableInputs> extends SubsystemBase {
-    protected final UpstreamIO<I> io;
+public abstract class UpstreamSubsystem<S extends Enum<S>, io extends UpstreamIO<I>, I extends LoggableInputs> extends SubsystemBase {
+    protected final io io;
     protected final I inputs;
     private Map<S, Runnable> stateReactions = new HashMap<>();
 
     private String name;
 
-    public UpstreamSubsystem(String name, UpstreamIO<I> io, I inputs) {
+    public UpstreamSubsystem(String name, io io, I inputs) {
         super();
         this.io = io;
         this.inputs = inputs;
