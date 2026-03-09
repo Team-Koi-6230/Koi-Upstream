@@ -2,7 +2,8 @@ package team6230.koiupstream.mechanisms.roller.io;
 
 import java.util.ArrayList;
 import java.util.List;
-import com.revrobotics.spark.SparkMax;
+
+import com.revrobotics.spark.SparkFlex;
 import com.revrobotics.spark.SparkBase.ControlType;
 import com.revrobotics.spark.SparkLowLevel.MotorType;
 import com.revrobotics.spark.config.SparkMaxConfig;
@@ -14,9 +15,9 @@ import team6230.koiupstream.util.tunable.Tunable;
 import team6230.koiupstream.util.tunable.TunableManager;
 import team6230.koiupstream.mechanisms.roller.RollerParameters;
 
-public class RollerIOSparkMax extends RollerIO {
-    private final SparkMax m_leader;
-    private final List<SparkMax> m_followers = new ArrayList<>();
+public class RollerIOSparkFlex extends RollerIO {
+    private final SparkFlex m_leader;
+    private final List<SparkFlex> m_followers = new ArrayList<>();
 
     @Tunable public double kP;
     @Tunable public double kI;
@@ -28,7 +29,7 @@ public class RollerIOSparkMax extends RollerIO {
     @Tunable public double kGearRatio;
     
 
-    public RollerIOSparkMax(RollerParameters params) {
+    public RollerIOSparkFlex(RollerParameters params) {
         super(params);
 
         kP = params.kP;
@@ -40,10 +41,10 @@ public class RollerIOSparkMax extends RollerIO {
         kSmartCurrentLimit = params.kSmartCurrentLimit;
         kGearRatio = params.kGearRatio;
 
-        m_leader = new SparkMax(params.kMotorId, MotorType.kBrushless);
+        m_leader = new SparkFlex(params.kMotorId, MotorType.kBrushless);
 
         for (FollowerMotor f : params.kFollowerMotors) {
-            SparkMax follower = new SparkMax(f.id(), MotorType.kBrushless);
+            SparkFlex follower = new SparkFlex(f.id(), MotorType.kBrushless);
             SparkMaxConfig fConfig = new SparkMaxConfig();
             fConfig.follow(params.kMotorId, f.isInverted());
             follower.configure(fConfig, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
@@ -60,8 +61,6 @@ public class RollerIOSparkMax extends RollerIO {
 
         config.smartCurrentLimit(kSmartCurrentLimit).encoder
                 .velocityConversionFactor(1.0 / kGearRatio);
-
-        
     }
 
     @Override

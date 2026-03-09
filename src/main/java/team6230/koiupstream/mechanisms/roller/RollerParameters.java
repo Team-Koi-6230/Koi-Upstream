@@ -1,8 +1,8 @@
 package team6230.koiupstream.mechanisms.roller;
 
-import team6230.koiupstream.util.FollowerMotor;
-import team6230.koiupstream.util.MotorTypeHelper;
-import team6230.koiupstream.util.MotorTypeHelper.motorType;
+import team6230.koiupstream.util.motorutil.FollowerMotor;
+import team6230.koiupstream.util.motorutil.MotorTypeHelper;
+import team6230.koiupstream.util.motorutil.MotorTypeHelper.motorType;
 
 public class RollerParameters {
     public String kName;
@@ -23,6 +23,4 @@ public class RollerParameters {
     public int kSmartCurrentLimit = 40;
 
     public int kGearRatio = 1;
-
-    public boolean kTuning = true;
 }

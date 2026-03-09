@@ -5,10 +5,11 @@ import org.littletonrobotics.junction.AutoLog;
 import team6230.koiupstream.io.UpstreamIO;
 import team6230.koiupstream.mechanisms.roller.RollerParameters;
 
-public abstract class RollerIO implements UpstreamIO<RollerInputsAutoLogged> {
+public abstract class RollerIO extends UpstreamIO<RollerInputsAutoLogged> {
     protected double currentRPMTarget = 0;
 
     public RollerIO(RollerParameters params) {
+        super(params.kName);
     }
 
     @AutoLog

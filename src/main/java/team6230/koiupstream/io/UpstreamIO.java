@@ -3,7 +3,13 @@ package team6230.koiupstream.io;
 import org.littletonrobotics.junction.AutoLog;
 import org.littletonrobotics.junction.inputs.LoggableInputs;
 
-public interface UpstreamIO<I extends LoggableInputs> {
+import team6230.koiupstream.util.tunable.TunableManager;
+
+public abstract class UpstreamIO<I extends LoggableInputs> {
+    public UpstreamIO(String name) {
+        TunableManager.register(this, "/Tuning/" + name + "/");
+    }
+
     @AutoLog
     public static class UpstreamIOInputs {
         public double appliedVolts = 0.0;

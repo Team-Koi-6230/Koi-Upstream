@@ -3,7 +3,7 @@ package team6230.koiupstream.mechanisms.roller;
 import team6230.koiupstream.mechanisms.roller.io.RollerIO;
 import team6230.koiupstream.mechanisms.roller.io.RollerInputsAutoLogged;
 import team6230.koiupstream.subsystems.UpstreamSubsystem;
-import team6230.koiupstream.util.MotorTypeHelper.motorType;
+import team6230.koiupstream.util.motorutil.MotorTypeHelper.motorType;
 
 public class Roller<S extends Enum<S>> extends UpstreamSubsystem<S, RollerIO, RollerInputsAutoLogged> {
     private double rpm = 0;
