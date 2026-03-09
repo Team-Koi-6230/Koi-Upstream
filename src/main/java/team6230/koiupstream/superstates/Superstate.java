@@ -1,0 +1,44 @@
+package team6230.koiupstream.superstates;
+
+import java.util.logging.Logger;
+
+import edu.wpi.first.wpilibj.DriverStation;
+import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import team6230.koiupstream.subsystems.UpstreamSubsystem;
+
+/* YOU MUST ENSURE THIS IS THE FIRST SUBSYSTEM TO BE CREATED. PREFERABLE IN THE ROBOT INIT */
+public class Superstate extends SubsystemBase {
+    private static Superstate _instance;
+    private final Logger logger = Logger.getLogger(Superstate.class.getName());
+    
+    private SuperstateManager<?> _manager;
+
+    public enum DefaultStates { DEFAULT }
+
+    private Superstate() {
+        // Initialize with default
+        _manager = new SuperstateManager<DefaultStates>(DefaultStates.DEFAULT);
+    }
+
+    public static Superstate getInstance() {
+        if (_instance == null) _instance = new Superstate();
+        return _instance;
+    }
+
+    /**
+     * Re-instantiates the manager with a new Enum set. 
+     * WARNING: Call this BEFORE adding subsystems!
+     */
+    public <E extends Enum<E>> void setSuperstateSet(E statesSet) {
+        _manager = new SuperstateManager<E>(statesSet);
+    }
+
+    public void addSubsystem(UpstreamSubsystem subsystem) {
+        if (_manager.isDefault()) {
+            DriverStation.reportWarning("WARNING: Subsystem manager is using default states", false);
+        }
+        
+        // Passing the method reference and the boolean supplier
+        _manager.subscribe(subsystem::HandleSuperstate, subsystem::isReady);
+    }
+}

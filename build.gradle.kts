@@ -1,0 +1,124 @@
+// ============================================================
+//  KoiUpstream – Team Koi #6230
+//  build.gradle.kts
+// ============================================================
+
+plugins {
+    `java-library`
+    `maven-publish`
+    id("edu.wpi.first.GradleRIO") version "2026.1.1"
+}
+
+// --------------- Project identity ---------------
+group   = "team6230"
+version = "1.0.0"
+
+// --------------- Java toolchain ---------------
+java {
+    toolchain {
+        languageVersion.set(JavaLanguageVersion.of(17))
+    }
+    withSourcesJar()
+}
+
+// --------------- Extra Maven repositories ---------------
+repositories {
+    maven { url = uri("https://frcmaven.wpi.edu/artifactory/littletonrobotics-mvn-release") }
+    maven { url = uri("https://maven.revrobotics.com") }
+    mavenCentral()
+}
+
+// --------------- Vendordep helpers ---------------
+// Returns the top-level "version" field from a vendordep JSON.
+fun vendordepVersion(fileName: String): String {
+    val json = groovy.json.JsonSlurper().parseText(
+        file("vendordeps/$fileName").readText()
+    ) as Map<*, *>
+    return json["version"] as String
+}
+
+// Returns all "groupId:artifactId:version" strings from javaDependencies[].
+@Suppress("UNCHECKED_CAST")
+fun vendordepJavaDeps(fileName: String): List<String> {
+    val json = groovy.json.JsonSlurper().parseText(
+        file("vendordeps/$fileName").readText()
+    ) as Map<*, *>
+    val deps = json["javaDependencies"] as? List<Map<*, *>> ?: return emptyList()
+    return deps.map { "${it["groupId"]}:${it["artifactId"]}:${it["version"]}" }
+}
+
+val akitVersion   by lazy { vendordepVersion("AdvantageKit.json") }
+val revLibVersion by lazy { vendordepVersion("REVLib.json") }
+
+// --------------- Dependencies ---------------
+dependencies {
+
+    // ── WPILib core ──────────────────────────────────────────────────────
+    // wpi.java.deps.wpilib() = HAL, ntcore, wpiutil, wpilibj, etc.
+    wpi.java.deps.wpilib().forEach { implementation(it) }
+
+    // ── WPILib new commands (wpilibj2) ────────────────────────────────────
+    // WPILibNewCommands.json uses a Gradle property for its version, not a
+    // plain string, so we can't parse it directly. Use the wpi property instead.
+    implementation("edu.wpi.first.wpilibNewCommands:wpilibNewCommands-java:${wpi.versions.wpilibVersion.get()}")
+
+    // ── AdvantageKit ─────────────────────────────────────────────────────
+    implementation("org.littletonrobotics.akit:akit-java:$akitVersion")
+    annotationProcessor("org.littletonrobotics.akit:akit-autolog:$akitVersion")
+    testAnnotationProcessor("org.littletonrobotics.akit:akit-autolog:$akitVersion")
+
+    // ── REVLib ───────────────────────────────────────────────────────────
+    implementation("com.revrobotics.frc:REVLib-java:$revLibVersion")
+
+    // ── Tests ────────────────────────────────────────────────────────────
+    testImplementation("org.junit.jupiter:junit-jupiter:5.11.0")
+    testRuntimeOnly("org.junit.platform:junit-platform-launcher")
+}
+
+// --------------- Test configuration ---------------
+tasks.test {
+    useJUnitPlatform()
+}
+
+// --------------- Publishing ---------------
+publishing {
+    publications {
+        create<MavenPublication>("maven") {
+            from(components["java"])
+
+            pom {
+                name.set("KoiUpstream")
+                description.set("Shared FRC robot library — Team Koi #6230")
+                url.set("https://github.com/teamkoi6230/KoiUpstream")
+
+                licenses {
+                    license {
+                        name.set("MIT License")
+                        url.set("https://opensource.org/licenses/MIT")
+                    }
+                }
+
+                developers {
+                    developer {
+                        id.set("teamkoi6230")
+                        name.set("Team Koi #6230")
+                    }
+                }
+            }
+        }
+    }
+
+    repositories {
+        mavenLocal()
+
+        // Uncomment to publish to GitHub Packages:
+        // maven {
+        //     name = "GitHubPackages"
+        //     url  = uri("https://maven.pkg.github.com/teamkoi6230/KoiUpstream")
+        //     credentials {
+        //         username = findProperty("gpr.user") as String? ?: System.getenv("GITHUB_ACTOR")
+        //         password = findProperty("gpr.key")  as String? ?: System.getenv("GITHUB_TOKEN")
+        //     }
+        // }
+    }
+}
