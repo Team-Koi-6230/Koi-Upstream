@@ -2,7 +2,6 @@ package team6230.koiupstream.subsystems;
 
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import team6230.koiupstream.io.UpstreamIO;
-import team6230.koiupstream.io.UpstreamIOInputsAutoLogged;
 import team6230.koiupstream.superstates.Superstate;
 
 import java.util.HashMap;
