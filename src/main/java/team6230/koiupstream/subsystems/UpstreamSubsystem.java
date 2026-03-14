@@ -9,7 +9,7 @@ import org.littletonrobotics.junction.inputs.LoggableInputs;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import team6230.koiupstream.io.UpstreamIO;
 import team6230.koiupstream.superstates.Superstate;
-import team6230.koiupstream.util.tunable.TunableManager;
+import team6230.koiupstream.tunable.TunableManager;
 
 public abstract class UpstreamSubsystem<S extends Enum<S>, io extends UpstreamIO<I>, I extends LoggableInputs> extends SubsystemBase {
     protected final io io;
@@ -18,9 +18,9 @@ public abstract class UpstreamSubsystem<S extends Enum<S>, io extends UpstreamIO
 
     private String name;
 
-    public UpstreamSubsystem(String name, io io, I inputs) {
+    public UpstreamSubsystem(String name, I inputs) {
         super();
-        this.io = io;
+        this.io = getIO();
         this.inputs = inputs;
         this.name = name;
         Superstate.getInstance().addSubsystem(this);
@@ -49,6 +49,8 @@ public abstract class UpstreamSubsystem<S extends Enum<S>, io extends UpstreamIO
 
     // Indicate when the subsystem has achived the wanted state
     public abstract boolean isReady();
+
+    protected abstract io getIO();
 
     public String getName() {
         return name;

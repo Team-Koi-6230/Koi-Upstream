@@ -95,8 +95,8 @@ public class ShooterSubsystem extends UpstreamSubsystem<RobotState, ShooterIO, S
 
     @Tunable private double targetRPM = 3500.0;
 
-    public ShooterSubsystem(ShooterIO io) {
-        super("Shooter", io, new ShooterIOInputsAutoLogged());
+    public ShooterSubsystem() {
+        super("Shooter", new ShooterIOInputsAutoLogged());
 
         addSuperstateBehaviour(RobotState.SHOOTING, () -> /* spin up */);
         addSuperstateBehaviour(RobotState.IDLE,     () -> /* coast */);
@@ -112,6 +112,11 @@ public class ShooterSubsystem extends UpstreamSubsystem<RobotState, ShooterIO, S
     @Override
     public boolean isReady() {
         return Math.abs(inputs.velocityRPM - targetRPM) < 50.0;
+    }
+
+    @Override
+    public boolean getIO() {
+        return new ShooterIOSparkMax();
     }
 }
 ```
