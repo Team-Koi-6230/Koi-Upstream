@@ -23,6 +23,7 @@ public abstract class UpstreamSubsystem<S extends Enum<S>, io extends UpstreamIO
         this.inputs = inputs;
         this.name = name;
         Superstate.getInstance().addSubsystem(this);
+        TunableManager.register(this, "/Tuning/" + name + "/");
     }
 
     @Override
