@@ -177,13 +177,6 @@
           "version": {
             "requires": "26.0.1"
           }
-        },
-        {
-          "group": "com.revrobotics.frc",
-          "module": "REVLib-java",
-          "version": {
-            "requires": "2026.0.4"
-          }
         }
       ],
       "files": [

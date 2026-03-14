@@ -24,7 +24,6 @@ java {
 // --------------- Extra Maven repositories ---------------
 repositories {
     maven { url = uri("https://frcmaven.wpi.edu/artifactory/littletonrobotics-mvn-release") }
-    maven { url = uri("https://maven.revrobotics.com") }
     mavenCentral()
 }
 
@@ -48,7 +47,6 @@ fun vendordepJavaDeps(fileName: String): List<String> {
 }
 
 val akitVersion   by lazy { vendordepVersion("AdvantageKit.json") }
-val revLibVersion by lazy { vendordepVersion("REVLib.json") }
 
 // --------------- Dependencies ---------------
 dependencies {
@@ -66,9 +64,6 @@ dependencies {
     implementation("org.littletonrobotics.akit:akit-java:$akitVersion")
     annotationProcessor("org.littletonrobotics.akit:akit-autolog:$akitVersion")
     testAnnotationProcessor("org.littletonrobotics.akit:akit-autolog:$akitVersion")
-
-    // ── REVLib ───────────────────────────────────────────────────────────
-    implementation("com.revrobotics.frc:REVLib-java:$revLibVersion")
 
     // ── Tests ────────────────────────────────────────────────────────────
     testImplementation("org.junit.jupiter:junit-jupiter:5.11.0")
