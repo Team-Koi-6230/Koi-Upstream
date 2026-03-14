@@ -85,40 +85,15 @@ publishing {
     publications {
         create<MavenPublication>("maven") {
             from(components["java"])
-
-            pom {
-                name.set("KoiUpstream")
-                description.set("Shared FRC robot library — Team Koi #6230")
-                url.set("https://github.com/teamkoi6230/KoiUpstream")
-
-                licenses {
-                    license {
-                        name.set("MIT License")
-                        url.set("https://opensource.org/licenses/MIT")
-                    }
-                }
-
-                developers {
-                    developer {
-                        id.set("teamkoi6230")
-                        name.set("Team Koi #6230")
-                    }
-                }
-            }
+            groupId = "team6230"
+            artifactId = "KoiUpstream"
+            version = "1.0.0"
         }
     }
 
     repositories {
-        mavenLocal()
-
-        // Uncomment to publish to GitHub Packages:
-        // maven {
-        //     name = "GitHubPackages"
-        //     url  = uri("https://maven.pkg.github.com/teamkoi6230/KoiUpstream")
-        //     credentials {
-        //         username = findProperty("gpr.user") as String? ?: System.getenv("GITHUB_ACTOR")
-        //         password = findProperty("gpr.key")  as String? ?: System.getenv("GITHUB_TOKEN")
-        //     }
-        // }
+        maven {
+            url = uri("${project.projectDir}/repo")
+        }
     }
 }
