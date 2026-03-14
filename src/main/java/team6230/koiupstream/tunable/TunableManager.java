@@ -1,4 +1,4 @@
-package team6230.koiupstream.util.tunable;
+package team6230.koiupstream.tunable;
 
 import java.lang.reflect.Field;
 import java.util.*;

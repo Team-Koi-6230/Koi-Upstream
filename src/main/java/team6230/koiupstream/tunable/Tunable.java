@@ -1,4 +1,4 @@
-package team6230.koiupstream.util.tunable;
+package team6230.koiupstream.tunable;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
