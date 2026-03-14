@@ -1,5 +1,11 @@
 package team6230.koiupstream.sysid;
 
+import java.util.Optional;
+
+import edu.wpi.first.wpilibj.DriverStation;
+import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.Commands;
+
 public class AutoTuner {
 
     public static class Config {

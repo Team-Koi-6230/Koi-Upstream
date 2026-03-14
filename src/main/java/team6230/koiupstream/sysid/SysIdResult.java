@@ -1,5 +1,7 @@
 package team6230.koiupstream.sysid;
 
+import edu.wpi.first.networktables.NetworkTableInstance;
+
 public record SysIdResult(double kS, double kV, double kA) {
 
     public void publishToNT(String mechanismName) {

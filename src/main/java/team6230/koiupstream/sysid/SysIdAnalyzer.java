@@ -1,5 +1,8 @@
 package team6230.koiupstream.sysid;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class SysIdAnalyzer {
 
     public static SysIdResult analyze(

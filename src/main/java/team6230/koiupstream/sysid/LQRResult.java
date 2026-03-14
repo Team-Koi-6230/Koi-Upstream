@@ -1,5 +1,7 @@
 package team6230.koiupstream.sysid;
 
+import edu.wpi.first.networktables.NetworkTableInstance;
+
 public record LQRResult(double kP, double kI, double kD) {
 
     public void publishToNT(String mechanismName) {

@@ -1,5 +1,8 @@
 package team6230.koiupstream.sysid;
 
+import edu.wpi.first.networktables.NetworkTableInstance;
+import edu.wpi.first.wpilibj.Timer;
+
 public record AutoTuneResult(
     double kS,
     double kV,

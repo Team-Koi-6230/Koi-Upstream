@@ -1,5 +1,13 @@
 package team6230.koiupstream.sysid;
 
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.LinkedHashMap;
+import java.util.List;
+import java.util.Map;
+
+import edu.wpi.first.wpilibj.Timer;
+
 public class SysIdCollector {
 
     private final List<SysIdDataPoint> currentPoints = new ArrayList<>();
