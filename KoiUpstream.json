@@ -1,6 +1,7 @@
 {
   "fileName": "KoiUpstream.json",
   "version": "1.0.0",
+  "frcYear": "2026",
   "uuid": "ab5d7af1-b621-4e44-9f58-f679415f8118",
   "mavenUrls": [
     "https://team-koi-6230.github.io/Koi-Upstream/repo/",
