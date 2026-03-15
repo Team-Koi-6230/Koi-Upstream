@@ -9,7 +9,7 @@
   <modelVersion>4.0.0</modelVersion>
   <groupId>team6230</groupId>
   <artifactId>KoiUpstream</artifactId>
-  <version>1.0.0</version>
+  <version>1.0.1</version>
   <dependencies>
     <dependency>
       <groupId>edu.wpi.first.wpilibj</groupId>
