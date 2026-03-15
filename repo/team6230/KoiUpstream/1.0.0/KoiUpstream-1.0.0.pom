@@ -119,11 +119,5 @@
       <version>2026.1.1</version>
       <scope>runtime</scope>
     </dependency>
-    <dependency>
-      <groupId>org.littletonrobotics.akit</groupId>
-      <artifactId>akit-java</artifactId>
-      <version>26.0.1</version>
-      <scope>runtime</scope>
-    </dependency>
   </dependencies>
 </project>

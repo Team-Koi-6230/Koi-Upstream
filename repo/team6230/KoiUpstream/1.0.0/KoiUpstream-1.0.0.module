@@ -170,13 +170,6 @@
           "version": {
             "requires": "2026.1.1"
           }
-        },
-        {
-          "group": "org.littletonrobotics.akit",
-          "module": "akit-java",
-          "version": {
-            "requires": "26.0.1"
-          }
         }
       ],
       "files": [
