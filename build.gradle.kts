@@ -50,21 +50,15 @@ val akitVersion   by lazy { vendordepVersion("AdvantageKit.json") }
 
 // --------------- Dependencies ---------------
 dependencies {
-
     // ── WPILib core ──────────────────────────────────────────────────────
-    // wpi.java.deps.wpilib() = HAL, ntcore, wpiutil, wpilibj, etc.
     wpi.java.deps.wpilib().forEach { implementation(it) }
-
     // ── WPILib new commands (wpilibj2) ────────────────────────────────────
-    // WPILibNewCommands.json uses a Gradle property for its version, not a
-    // plain string, so we can't parse it directly. Use the wpi property instead.
     implementation("edu.wpi.first.wpilibNewCommands:wpilibNewCommands-java:${wpi.versions.wpilibVersion.get()}")
-
     // ── AdvantageKit ─────────────────────────────────────────────────────
-    implementation("org.littletonrobotics.akit:akit-java:$akitVersion")
+    compileOnly("org.littletonrobotics.akit:akit-java:$akitVersion")
+    compileOnly("org.littletonrobotics.akit:akit-autolog:$akitVersion")
     annotationProcessor("org.littletonrobotics.akit:akit-autolog:$akitVersion")
     testAnnotationProcessor("org.littletonrobotics.akit:akit-autolog:$akitVersion")
-
     // ── Tests ────────────────────────────────────────────────────────────
     testImplementation("org.junit.jupiter:junit-jupiter:5.11.0")
     testRuntimeOnly("org.junit.platform:junit-platform-launcher")
