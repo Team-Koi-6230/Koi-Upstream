@@ -1,11 +1,12 @@
 {
   "fileName": "KoiUpstream.json",
   "name": "KoiUpstream",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "uuid": "ab5d7af1-b621-4e44-9f58-f679415f8118",
   "frcYear": "2026",
   "mavenUrls": [
-    "https://team-koi-6230.github.io/Koi-Upstream/repo/"
+    "https://team-koi-6230.github.io/Koi-Upstream/repo/",
+    "https://frcmaven.wpi.edu/artifactory/littletonrobotics-mvn-release"
   ],
   "jsonUrl": "https://team-koi-6230.github.io/Koi-Upstream/KoiUpstream.json",
   "javaDependencies": [
