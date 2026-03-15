@@ -17,7 +17,14 @@ A shared Java library for FRC Team 6230. Provides superstate-based subsystem coo
 ## Installation
 
 1. Follow the [AdvantageKit](https://docs.advantagekit.org/) installation guide.
-2. Install the following vendor dependency `https://raw.githubusercontent.com/Team-Koi-6230/Koi-Upstream/refs/heads/main/KoiUpstream.json?v=6230`. Or alternativly, add the KoiUpstream sources to your robot project (local vendor dep or Gradle subproject)
+2. Choose one of the following methods to add the vendor dependency:
+
+    - **Remote Install:** Add the KoiUpstream JSON URL to your project. `https://raw.githubusercontent.com/Team-Koi-6230/Koi-Upstream/refs/heads/main/KoiUpstream.json`
+
+    - **Project Template:** Use the [Upstreamed Robot](https://github.com/Team-Koi-6230/UpstreamedRobot) template for a fresh start.
+
+    - **Manual Integration:** Add the KoiUpstream source files directly as a local vendor dependency or a Gradle subproject.
+
 3. In `robotInit()`, **before constructing any subsystems**, initialize the Superstate singleton with your state enum:
 
 ```java
