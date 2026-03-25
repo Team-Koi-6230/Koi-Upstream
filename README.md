@@ -134,8 +134,6 @@ public class ShooterSubsystem extends UpstreamSubsystem<RobotState, ShooterIO, S
 
 Hardware abstraction layer — one per subsystem. Implement it twice: real hardware and simulation. AdvantageKit's `@AutoLog` generates the inputs class.
 
-The base `UpstreamIOInputs` already includes `appliedVolts`, `currentAmps[]`, and `tempCelsius[]`. Only add mechanism-specific fields in your subclass.
-
 ```java
 public abstract class ShooterIO extends UpstreamIO<ShooterIOInputs> {
 
