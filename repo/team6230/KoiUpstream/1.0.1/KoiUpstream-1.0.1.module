@@ -27,11 +27,11 @@
         {
           "name": "KoiUpstream-1.0.1.jar",
           "url": "KoiUpstream-1.0.1.jar",
-          "size": 37094,
-          "sha512": "80ec9631336988f0ea88c2245bc348afee2fb2e8d77b9946f99e734f50b62d669e8eb93d1c0d3835ceda75ccbe8e23d13aa6a96469b26dbcb56a63aa60382627",
-          "sha256": "53b042cc8b3de8165ba1a20e525a2e0ba9517336ed8e6abe7921f7035c01f3a4",
-          "sha1": "267759c0800d66a84f9972ad6bef18f047a83dd9",
-          "md5": "62e1c2246d8b5e7682ff86c00f09602f"
+          "size": 36736,
+          "sha512": "80be430d29e2d7a450ad1239481cbbac3ad94329b86eff7aa2692e032923cbe3167cf8783f2d95767be4b88afcec155b5976fa1bf88c27aa041b8366866ab511",
+          "sha256": "8056f8a2c2e8d05aa064cd6bb88d235e8707f5495cb2f713433e4d48c782dd75",
+          "sha1": "5c312acf6da224ad69a96e2b590b1667ba5e3f55",
+          "md5": "8d6e423608df51655b037a146ce2a8d1"
         }
       ]
     },
@@ -176,11 +176,11 @@
         {
           "name": "KoiUpstream-1.0.1.jar",
           "url": "KoiUpstream-1.0.1.jar",
-          "size": 37094,
-          "sha512": "80ec9631336988f0ea88c2245bc348afee2fb2e8d77b9946f99e734f50b62d669e8eb93d1c0d3835ceda75ccbe8e23d13aa6a96469b26dbcb56a63aa60382627",
-          "sha256": "53b042cc8b3de8165ba1a20e525a2e0ba9517336ed8e6abe7921f7035c01f3a4",
-          "sha1": "267759c0800d66a84f9972ad6bef18f047a83dd9",
-          "md5": "62e1c2246d8b5e7682ff86c00f09602f"
+          "size": 36736,
+          "sha512": "80be430d29e2d7a450ad1239481cbbac3ad94329b86eff7aa2692e032923cbe3167cf8783f2d95767be4b88afcec155b5976fa1bf88c27aa041b8366866ab511",
+          "sha256": "8056f8a2c2e8d05aa064cd6bb88d235e8707f5495cb2f713433e4d48c782dd75",
+          "sha1": "5c312acf6da224ad69a96e2b590b1667ba5e3f55",
+          "md5": "8d6e423608df51655b037a146ce2a8d1"
         }
       ]
     },
@@ -196,11 +196,11 @@
         {
           "name": "KoiUpstream-1.0.1-sources.jar",
           "url": "KoiUpstream-1.0.1-sources.jar",
-          "size": 13492,
-          "sha512": "f8c9e2e01187e03d86157921c98582e443a9565bcc01b27cd495c8ffabbaa960089af4f18d854243157dc32427549202bd6446ea403b66335d6832852c4c244e",
-          "sha256": "8549b4fa71110c11e8990ab34ba23bd5e81d73c14597ac89bbd5f809f5d13b3f",
-          "sha1": "89fe11c197903b78f45e88c4384067ceecc9395f",
-          "md5": "5e0e0da66ad2019107c33528f7b4c229"
+          "size": 13435,
+          "sha512": "3c8972d80895e7f628a077ebdc1cc7eed8b679e51ebf88f7b4c5d1d87dbf12f5335239b53633eb7cc5e122113285440eba951c7d534b242b04d44b24f97cc3db",
+          "sha256": "3bc730427233cdbbc29db7a545c052da62e44655555fee45133e4f74e8edcb03",
+          "sha1": "835f81d4d6bcbf7a5bd3ae2fa9f206436e9a3501",
+          "md5": "9b05c1259c6796a4e243d7970c022263"
         }
       ]
     }
