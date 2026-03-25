@@ -128,6 +128,36 @@ public class ShooterSubsystem extends UpstreamSubsystem<RobotState, ShooterIO, S
 }
 ```
 
+### Conditional Actions
+In order to keep periodic() as clean and simple as possible, Koi Upstream encourages the use of Conditional Actions.
+
+A Conditional Action is essentially a "fire and forget" listener: a pair consisting of a boolean condition and a void function (callback). When the condition evaluates to true, the action executes exactly once and is then automatically removed from the queue.
+
+This is extremely useful for waiting for a specific subsystem state (like reaching a target height or RPM) before proceeding with another logic flow without nesting if statements in your update loops.
+#### Key Features
+
+* Automatic Cleanup: Actions are removed immediately after they trigger.
+* Zero-Latency: Conditions are checked at the start of every periodic() cycle.
+* Non-Blocking: Doesn't halt the rest of the subsystem's logic.
+
+#### Usage Example
+
+To use a Conditional Action, you simply register it within your subsystem. Here is how you might trigger an intake once your arm has reached its deployment position:
+
+```java
+// Inside a command or subsystem method
+registerConditionalAction(new ConditionalAction(
+    () -> arm.isAtPosition(ArmConstants.kDeploymentAngle), // The Condition
+    () -> intake.setPower(1.0)                             // The Action
+));
+```
+
+| Method | Description |
+|---|---|
+| `registerConditionalAction(ConditionalAction)` | Adds a new action to the queue to be checked every loop.
+| `clearConditionalActions()` | Purges all pending actions (useful for emergency stops or state resets).
+| `removeConditionalAction(ConditionalAction)` | Manually removes a specific action if it's no longer relevant.
+
 ---
 
 ## UpstreamIO
