@@ -11,7 +11,7 @@ plugins {
 
 // --------------- Project identity ---------------
 group   = "team6230"
-version = "1.0.2"
+version = "1.0.3"
 
 // --------------- Java toolchain ---------------
 java {
@@ -76,7 +76,7 @@ publishing {
             from(components["java"])
             groupId = "team6230"
             artifactId = "KoiUpstream"
-            version = "1.0.2"
+            version = "1.0.3"
         }
     }
 

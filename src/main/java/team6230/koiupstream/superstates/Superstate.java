@@ -9,10 +9,12 @@ import team6230.koiupstream.subsystems.UpstreamSubsystem;
 public class Superstate {
     private static Superstate _instance;
     private final Logger logger = Logger.getLogger(Superstate.class.getName());
-    
+
     private SuperstateManager<?> _manager;
 
-    public enum DefaultStates { DEFAULT }
+    public enum DefaultStates {
+        DEFAULT
+    }
 
     private Superstate() {
         // Initialize with default
@@ -20,12 +22,13 @@ public class Superstate {
     }
 
     public static Superstate getInstance() {
-        if (_instance == null) _instance = new Superstate();
+        if (_instance == null)
+            _instance = new Superstate();
         return _instance;
     }
 
     /**
-     * Re-instantiates the manager with a new Enum set. 
+     * Re-instantiates the manager with a new Enum set.
      * WARNING: Call this BEFORE adding subsystems!
      */
     public <E extends Enum<E>> void setSuperstateSet(E statesSet) {
@@ -37,11 +40,25 @@ public class Superstate {
             DriverStation.reportWarning("WARNING: Subsystem manager is using default states", false);
             logger.warning("WARNING: Subsystem manager is using default states");
         }
-        
+
         _manager.subscribe(subsystem::handleSuperstate, subsystem::isReady);
     }
 
     public void updateLogic() {
         _manager.periodic();
+    }
+
+    @SuppressWarnings("unchecked")
+    public <E extends Enum<E>> E getSuperstate() {
+        return (E) _manager.getSuperstate();
+    }
+
+    @SuppressWarnings("unchecked")
+    public <E extends Enum<E>> E getWantedSuperstate() {
+        return (E) _manager.getWantedSuperstate();
+    }
+
+    public boolean isAtSuperstate() {
+        return _manager.isAtSuperstate();
     }
 }
