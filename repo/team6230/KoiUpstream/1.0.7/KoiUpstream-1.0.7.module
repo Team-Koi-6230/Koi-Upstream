@@ -3,7 +3,7 @@
   "component": {
     "group": "team6230",
     "module": "KoiUpstream",
-    "version": "1.0.6",
+    "version": "1.0.7",
     "attributes": {
       "org.gradle.status": "release"
     }
@@ -25,8 +25,8 @@
       },
       "files": [
         {
-          "name": "KoiUpstream-1.0.6.jar",
-          "url": "KoiUpstream-1.0.6.jar",
+          "name": "KoiUpstream-1.0.7.jar",
+          "url": "KoiUpstream-1.0.7.jar",
           "size": 39630,
           "sha512": "7d696927d475b1641a9825e9098296fcedfa8a215f3ce99defacaca3d1263e6132bae8748e3c0792412eeba06087c8468f48387595d7276781662028e35d9003",
           "sha256": "b568155dd411d8387695b124f0cf905c680cd3247b044e5f66f808854ceef99e",
@@ -174,8 +174,8 @@
       ],
       "files": [
         {
-          "name": "KoiUpstream-1.0.6.jar",
-          "url": "KoiUpstream-1.0.6.jar",
+          "name": "KoiUpstream-1.0.7.jar",
+          "url": "KoiUpstream-1.0.7.jar",
           "size": 39630,
           "sha512": "7d696927d475b1641a9825e9098296fcedfa8a215f3ce99defacaca3d1263e6132bae8748e3c0792412eeba06087c8468f48387595d7276781662028e35d9003",
           "sha256": "b568155dd411d8387695b124f0cf905c680cd3247b044e5f66f808854ceef99e",
@@ -194,8 +194,8 @@
       },
       "files": [
         {
-          "name": "KoiUpstream-1.0.6-sources.jar",
-          "url": "KoiUpstream-1.0.6-sources.jar",
+          "name": "KoiUpstream-1.0.7-sources.jar",
+          "url": "KoiUpstream-1.0.7-sources.jar",
           "size": 14539,
           "sha512": "1bb453670237cdb4f707bce1464ada482259dc27b97fd2e16269c15e50ffa857eae28de6f10611013b0b421ee2531921aae4754a54257a10e1e92b01566114e5",
           "sha256": "815d9fb3a659a80ce023aa5b2069dd8800edf1512c7efa42dd3bf4efce8d73f3",

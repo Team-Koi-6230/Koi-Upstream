@@ -90,4 +90,8 @@ public class Superstate extends SubsystemBase {
     public BooleanSupplier waitUntilCurrentIs(Enum<?> target) {
         return () -> isCurrent(target);
     }
+
+    public boolean isAtDefaultState() {
+        return _manager.isAtDefaultState();
+    }
 }

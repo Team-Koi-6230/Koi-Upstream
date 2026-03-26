@@ -17,6 +17,7 @@ public abstract class UpstreamSubsystem<S extends Enum<S>, io extends UpstreamIO
     protected final io io;
     protected final I inputs;
     private Map<S, Runnable> stateReactions = new HashMap<>();
+    private Runnable defaultReaction = null;
     private ArrayList<ConditionalAction> conditionalActions = new ArrayList<>();
 
     private String name;
@@ -44,11 +45,17 @@ public abstract class UpstreamSubsystem<S extends Enum<S>, io extends UpstreamIO
         Runnable stateReaction = stateReactions.get(state);
         if (stateReaction != null) {
             stateReaction.run();
+        } else if (defaultReaction != null && !Superstate.getInstance().isAtDefaultState()) {
+            defaultReaction.run();
         }
     }
 
     protected final void addSuperstateBehaviour(S state, Runnable action) {
         stateReactions.put(state, action);
+    }
+
+    protected final void addDefaultSuperstateBehaviour(Runnable action) {
+        defaultReaction = action;
     }
 
     protected final void registerConditionalAction(ConditionalAction conditionalAction) {

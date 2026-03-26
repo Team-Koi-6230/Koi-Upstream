@@ -16,9 +16,12 @@ public class SuperstateManager<E extends Enum<E>> {
     @Logged
     private E currentWantedState;
 
+    private final E defaultState;
+
     public SuperstateManager(E defaultValue) {
         this.currentState = defaultValue;
         this.currentWantedState = defaultValue;
+        this.defaultState = defaultValue;
     }
 
     public void subscribe(Consumer<E> callback, BooleanSupplier isReady) {
@@ -72,5 +75,9 @@ public class SuperstateManager<E extends Enum<E>> {
 
     public boolean isDefault() {
         return currentState instanceof DefaultStates;
+    }
+
+    public boolean isAtDefaultState() {
+        return currentWantedState == defaultState;
     }
 }
