@@ -1,5 +1,6 @@
 package team6230.koiupstream.superstates;
 
+import java.util.function.BooleanSupplier;
 import java.util.logging.Logger;
 
 import edu.wpi.first.wpilibj.DriverStation;
@@ -75,5 +76,18 @@ public class Superstate extends SubsystemBase {
 
     public <E extends Enum<E>> void setDefaultWantedState(E wantedSuperstate) {
         this.setDefaultCommand(setWantedSuperstateCommand(wantedSuperstate));
+    }
+
+    public <E extends Enum<E>> boolean isCurrent(Enum<?> target) {
+        var currentState = getSuperstate();
+        if (target == null || currentState == null)
+            return false;
+
+        return currentState.getDeclaringClass().isInstance(target)
+                && currentState.equals(target);
+    }
+
+    public BooleanSupplier waitUntilCurrentIs(Enum<?> target) {
+        return () -> isCurrent(target);
     }
 }
