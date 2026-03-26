@@ -3,6 +3,8 @@ package team6230.koiupstream.superstates;
 import java.util.logging.Logger;
 
 import edu.wpi.first.wpilibj.DriverStation;
+import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import team6230.koiupstream.subsystems.UpstreamSubsystem;
 
@@ -65,5 +67,13 @@ public class Superstate extends SubsystemBase {
 
     public <E extends Enum<E>> void setWantedSuperstate(E wantedSuperstate) {
         _manager.setWantedSuperstate(wantedSuperstate);
+    }
+
+    public <E extends Enum<E>> Command setWantedSuperstateCommand(E wantedSuperstate) {
+        return Commands.run(() -> setWantedSuperstate(wantedSuperstate), this);
+    }
+
+    public <E extends Enum<E>> void setDefaultWantedState(E wantedSuperstate) {
+        this.setDefaultCommand(setWantedSuperstateCommand(wantedSuperstate));
     }
 }
