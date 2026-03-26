@@ -8,7 +8,6 @@ import java.util.function.Consumer;
 import edu.wpi.first.epilogue.Logged;
 import team6230.koiupstream.superstates.Superstate.DefaultStates;
 
-
 public class SuperstateManager<E extends Enum<E>> {
     private final List<Consumer<E>> subscribers = new ArrayList<>();
     private final List<BooleanSupplier> subscribersReady = new ArrayList<>();
@@ -27,21 +26,33 @@ public class SuperstateManager<E extends Enum<E>> {
         subscribersReady.add(isReady);
     }
 
-    public void setWantedSuperstate(E state) {
-        if (this.currentState.equals(state)) return;
+    @SuppressWarnings("unlikely-arg-type")
+    public <S extends Enum<S>> void setWantedSuperstate(S wantedSuperstate) {
+        if (wantedSuperstate.equals(this.currentState)) {
+            return;
+        }
 
-        this.currentWantedState = state;
-        
+        if (!currentState.getDeclaringClass().isInstance(wantedSuperstate)) {
+            return;
+        }
+
+        @SuppressWarnings("unchecked")
+        E castedState = (E) wantedSuperstate;
+
+        this.currentWantedState = castedState;
+
         for (var subscriber : subscribers) {
-            subscriber.accept(state);
+            subscriber.accept(castedState);
         }
     }
 
     public void periodic() {
-        if (this.currentState.equals(this.currentWantedState)) return;
+        if (this.currentState.equals(this.currentWantedState))
+            return;
 
         for (var subscriber : subscribersReady) {
-            if (!subscriber.getAsBoolean()) return;
+            if (!subscriber.getAsBoolean())
+                return;
         }
 
         this.currentState = this.currentWantedState;
