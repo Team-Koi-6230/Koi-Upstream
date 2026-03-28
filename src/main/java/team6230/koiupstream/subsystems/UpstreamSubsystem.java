@@ -3,6 +3,8 @@ package team6230.koiupstream.subsystems;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.PriorityQueue;
+import java.util.Queue;
 
 import org.littletonrobotics.junction.Logger;
 import org.littletonrobotics.junction.inputs.LoggableInputs;
@@ -19,6 +21,9 @@ public abstract class UpstreamSubsystem<S extends Enum<S>, io extends UpstreamIO
     private Map<S, Runnable> stateReactions = new HashMap<>();
     private Runnable defaultReaction = null;
     private ArrayList<ConditionalAction> conditionalActions = new ArrayList<>();
+    private Queue<ConditionalAction> actionsQueue = new PriorityQueue<>();
+    private Queue<ConditionalAction> removeQueue = new PriorityQueue<>();
+    private boolean requestCleanActions = false;
     private ArrayList<ExtraIO> extraIOs = new ArrayList<>();
     private boolean superstateMode = true;
 
@@ -40,6 +45,7 @@ public abstract class UpstreamSubsystem<S extends Enum<S>, io extends UpstreamIO
         handleExtraIOs();
         checkConditionalActions();
         update();
+
     }
 
     @SuppressWarnings("unchecked")
@@ -78,11 +84,11 @@ public abstract class UpstreamSubsystem<S extends Enum<S>, io extends UpstreamIO
     }
 
     protected final void registerConditionalAction(ConditionalAction conditionalAction) {
-        conditionalActions.add(conditionalAction);
+        actionsQueue.add(conditionalAction);
     }
 
     protected final void clearConditionalActions() {
-        conditionalActions.clear();
+        requestCleanActions = true;
     }
 
     @SuppressWarnings("unchecked")
@@ -91,18 +97,31 @@ public abstract class UpstreamSubsystem<S extends Enum<S>, io extends UpstreamIO
     }
 
     protected final void removeConditionalAction(ConditionalAction removedAction) {
-        try {
-            conditionalActions.remove(removedAction);
-        } catch (Exception e) {
-            System.err.println("[ERROR]: Failed to remove action in subsystem " + getName());
-        }
+        removeQueue.add(removedAction);
+
     }
 
     private void checkConditionalActions() {
+        while (!removeQueue.isEmpty()) {
+            try {
+                conditionalActions.remove(removeQueue.remove());
+            } catch (Exception e) {
+                System.err.println("[ERROR]: Failed to remove action in subsystem " + getName());
+            }
+        }
+
+        if (requestCleanActions) {
+            conditionalActions.clear();
+            requestCleanActions = false;
+        }
+
+        while (!actionsQueue.isEmpty()) {
+            conditionalActions.add(actionsQueue.remove());
+        }
+
         conditionalActions.removeIf(c -> {
             if (c.condition().getAsBoolean()) {
-                c.Action().run();;
-
+                c.Action().run();
                 return true;
             }
             return false;
