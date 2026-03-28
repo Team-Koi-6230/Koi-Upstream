@@ -19,6 +19,7 @@ public abstract class UpstreamSubsystem<S extends Enum<S>, io extends UpstreamIO
     private Map<S, Runnable> stateReactions = new HashMap<>();
     private Runnable defaultReaction = null;
     private ArrayList<ConditionalAction> conditionalActions = new ArrayList<>();
+    private ArrayList<ExtraIO> extraIOs = new ArrayList<>();
     private boolean superstateMode = true;
 
     private String name;
@@ -36,8 +37,19 @@ public abstract class UpstreamSubsystem<S extends Enum<S>, io extends UpstreamIO
     public final void periodic() {
         io.updateInputs(inputs);
         Logger.processInputs("Upstream/" + getName(), inputs);
+        handleExtraIOs();
         checkConditionalActions();
         update();
+    }
+
+    @SuppressWarnings("unchecked")
+    private void handleExtraIOs() {
+        if (extraIOs.isEmpty())
+            return;
+        for (var io : extraIOs) {
+            io.io().updateInputs(io.inputs());
+            Logger.processInputs("Upstream/" + getName() + "/" + io.name(), inputs);
+        }
     }
 
     public abstract void update();
