@@ -52,6 +52,10 @@ public abstract class UpstreamSubsystem<S extends Enum<S>, io extends UpstreamIO
         }
     }
 
+    protected final void addAnExtraIO(ExtraIO extra) {
+        extraIOs.add(extra);
+    }
+
     public abstract void update();
 
     public final void handleSuperstate(S state) {
