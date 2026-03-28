@@ -1,0 +1,208 @@
+{
+  "formatVersion": "1.1",
+  "component": {
+    "group": "team6230",
+    "module": "KoiUpstream",
+    "version": "1.0.12.2",
+    "attributes": {
+      "org.gradle.status": "release"
+    }
+  },
+  "createdBy": {
+    "gradle": {
+      "version": "9.2.1"
+    }
+  },
+  "variants": [
+    {
+      "name": "apiElements",
+      "attributes": {
+        "org.gradle.category": "library",
+        "org.gradle.dependency.bundling": "external",
+        "org.gradle.jvm.version": 17,
+        "org.gradle.libraryelements": "jar",
+        "org.gradle.usage": "java-api"
+      },
+      "files": [
+        {
+          "name": "KoiUpstream-1.0.12.2.jar",
+          "url": "KoiUpstream-1.0.12.2.jar",
+          "size": 41077,
+          "sha512": "a91815b7bf4665ee4ee0e87b49a31c172cfd930ba13d3de66980d074db247fca49bd1fa89bd6e087ef6f70a1679b7ac73953422258c5438e2ede946a320771d0",
+          "sha256": "63e04634100d5838f7cb4ed644ad31204d902536008f46a5584a4e4a4282a07b",
+          "sha1": "a0c61b831ff66232ce76b2f18e55400c4fecba03",
+          "md5": "5fb779c62b8a1d0a7b0c96bfe600663f"
+        }
+      ]
+    },
+    {
+      "name": "runtimeElements",
+      "attributes": {
+        "org.gradle.category": "library",
+        "org.gradle.dependency.bundling": "external",
+        "org.gradle.jvm.version": 17,
+        "org.gradle.libraryelements": "jar",
+        "org.gradle.usage": "java-runtime"
+      },
+      "dependencies": [
+        {
+          "group": "edu.wpi.first.wpilibj",
+          "module": "wpilibj-java",
+          "version": {
+            "requires": "2026.1.1"
+          }
+        },
+        {
+          "group": "edu.wpi.first.wpimath",
+          "module": "wpimath-java",
+          "version": {
+            "requires": "2026.1.1"
+          }
+        },
+        {
+          "group": "edu.wpi.first.ntcore",
+          "module": "ntcore-java",
+          "version": {
+            "requires": "2026.1.1"
+          }
+        },
+        {
+          "group": "edu.wpi.first.cscore",
+          "module": "cscore-java",
+          "version": {
+            "requires": "2026.1.1"
+          }
+        },
+        {
+          "group": "edu.wpi.first.cameraserver",
+          "module": "cameraserver-java",
+          "version": {
+            "requires": "2026.1.1"
+          }
+        },
+        {
+          "group": "edu.wpi.first.hal",
+          "module": "hal-java",
+          "version": {
+            "requires": "2026.1.1"
+          }
+        },
+        {
+          "group": "edu.wpi.first.wpinet",
+          "module": "wpinet-java",
+          "version": {
+            "requires": "2026.1.1"
+          }
+        },
+        {
+          "group": "edu.wpi.first.wpiutil",
+          "module": "wpiutil-java",
+          "version": {
+            "requires": "2026.1.1"
+          }
+        },
+        {
+          "group": "edu.wpi.first.apriltag",
+          "module": "apriltag-java",
+          "version": {
+            "requires": "2026.1.1"
+          }
+        },
+        {
+          "group": "edu.wpi.first.wpiunits",
+          "module": "wpiunits-java",
+          "version": {
+            "requires": "2026.1.1"
+          }
+        },
+        {
+          "group": "edu.wpi.first.epilogue",
+          "module": "epilogue-runtime-java",
+          "version": {
+            "requires": "2026.1.1"
+          }
+        },
+        {
+          "group": "edu.wpi.first.thirdparty.frc2025.opencv",
+          "module": "opencv-java",
+          "version": {
+            "requires": "4.10.0-3"
+          }
+        },
+        {
+          "group": "org.ejml",
+          "module": "ejml-simple",
+          "version": {
+            "requires": "0.44.0"
+          }
+        },
+        {
+          "group": "com.fasterxml.jackson.core",
+          "module": "jackson-annotations",
+          "version": {
+            "requires": "2.19.2"
+          }
+        },
+        {
+          "group": "com.fasterxml.jackson.core",
+          "module": "jackson-core",
+          "version": {
+            "requires": "2.19.2"
+          }
+        },
+        {
+          "group": "com.fasterxml.jackson.core",
+          "module": "jackson-databind",
+          "version": {
+            "requires": "2.19.2"
+          }
+        },
+        {
+          "group": "us.hebi.quickbuf",
+          "module": "quickbuf-runtime",
+          "version": {
+            "requires": "1.4"
+          }
+        },
+        {
+          "group": "edu.wpi.first.wpilibNewCommands",
+          "module": "wpilibNewCommands-java",
+          "version": {
+            "requires": "2026.1.1"
+          }
+        }
+      ],
+      "files": [
+        {
+          "name": "KoiUpstream-1.0.12.2.jar",
+          "url": "KoiUpstream-1.0.12.2.jar",
+          "size": 41077,
+          "sha512": "a91815b7bf4665ee4ee0e87b49a31c172cfd930ba13d3de66980d074db247fca49bd1fa89bd6e087ef6f70a1679b7ac73953422258c5438e2ede946a320771d0",
+          "sha256": "63e04634100d5838f7cb4ed644ad31204d902536008f46a5584a4e4a4282a07b",
+          "sha1": "a0c61b831ff66232ce76b2f18e55400c4fecba03",
+          "md5": "5fb779c62b8a1d0a7b0c96bfe600663f"
+        }
+      ]
+    },
+    {
+      "name": "sourcesElements",
+      "attributes": {
+        "org.gradle.category": "documentation",
+        "org.gradle.dependency.bundling": "external",
+        "org.gradle.docstype": "sources",
+        "org.gradle.usage": "java-runtime"
+      },
+      "files": [
+        {
+          "name": "KoiUpstream-1.0.12.2-sources.jar",
+          "url": "KoiUpstream-1.0.12.2-sources.jar",
+          "size": 15068,
+          "sha512": "861826e643c69eac6010058b9c0c09276996754c892053601000277adc373f82af11cb2cebba2387351ba97c8ea9ca93712ae0fb9236472db380dac7a0721850",
+          "sha256": "2850b810000ef0a9f29484bc726d80a68f219b8c61893b254180f76ac2bd46ac",
+          "sha1": "04e8b6433c826f5112f1468b181a273e1a2dfc74",
+          "md5": "bf23ade669ded256fd938cfd597586c4"
+        }
+      ]
+    }
+  ]
+}

@@ -48,7 +48,7 @@ public abstract class UpstreamSubsystem<S extends Enum<S>, io extends UpstreamIO
             return;
         for (var io : extraIOs) {
             io.io().updateInputs(io.inputs());
-            Logger.processInputs("Upstream/" + getName() + "/" + io.name(), inputs);
+            Logger.processInputs("Upstream/" + getName() + "/" + io.name(), io.inputs());
         }
     }
 
