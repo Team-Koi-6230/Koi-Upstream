@@ -101,8 +101,8 @@ public abstract class UpstreamSubsystem<S extends Enum<S>, io extends UpstreamIO
     private void checkConditionalActions() {
         conditionalActions.removeIf(c -> {
             if (c.condition().getAsBoolean()) {
-                c.Action();
-                System.out.println("action was activated");
+                c.Action().run();;
+
                 return true;
             }
             return false;
