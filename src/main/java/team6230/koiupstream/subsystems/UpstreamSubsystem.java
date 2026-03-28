@@ -1,9 +1,9 @@
 package team6230.koiupstream.subsystems;
 
+import java.util.ArrayDeque;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.PriorityQueue;
 import java.util.Queue;
 
 import org.littletonrobotics.junction.Logger;
@@ -21,8 +21,8 @@ public abstract class UpstreamSubsystem<S extends Enum<S>, io extends UpstreamIO
     private Map<S, Runnable> stateReactions = new HashMap<>();
     private Runnable defaultReaction = null;
     private ArrayList<ConditionalAction> conditionalActions = new ArrayList<>();
-    private Queue<ConditionalAction> actionsQueue = new PriorityQueue<>();
-    private Queue<ConditionalAction> removeQueue = new PriorityQueue<>();
+    private Queue<ConditionalAction> actionsQueue = new ArrayDeque<>();
+    private Queue<ConditionalAction> removeQueue = new ArrayDeque<>();
     private boolean requestCleanActions = false;
     private ArrayList<ExtraIO> extraIOs = new ArrayList<>();
     private boolean superstateMode = true;
