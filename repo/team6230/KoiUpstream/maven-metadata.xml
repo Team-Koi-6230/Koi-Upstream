@@ -3,8 +3,8 @@
   <groupId>team6230</groupId>
   <artifactId>KoiUpstream</artifactId>
   <versioning>
-    <latest>1.0.12.2.3</latest>
-    <release>1.0.12.2.3</release>
+    <latest>1.0.13</latest>
+    <release>1.0.13</release>
     <versions>
       <version>1.0.0</version>
       <version>1.0.1</version>
@@ -24,7 +24,8 @@
       <version>1.0.12.2.1</version>
       <version>1.0.12.2.2</version>
       <version>1.0.12.2.3</version>
+      <version>1.0.13</version>
     </versions>
-    <lastUpdated>20260328145531</lastUpdated>
+    <lastUpdated>20260328203741</lastUpdated>
   </versioning>
 </metadata>
