@@ -31,7 +31,7 @@ public class SuperstateManager<E extends Enum<E>> {
 
     @SuppressWarnings("unlikely-arg-type")
     public <S extends Enum<S>> void setWantedSuperstate(S wantedSuperstate) {
-        if (wantedSuperstate.equals(this.currentWantedState) && wantedSuperstate.equals(this.currentState)) {
+        if (wantedSuperstate.equals(this.currentWantedState) || wantedSuperstate.equals(this.currentState)) {
             return;
         }
 
