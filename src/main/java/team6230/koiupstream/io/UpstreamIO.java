@@ -9,5 +9,6 @@ public interface UpstreamIO<I extends LoggableInputs> {
 
     }
 
-    public abstract void updateInputs(I inputs);
+    public default void updateInputs(I inputs) {
+    }
 }
