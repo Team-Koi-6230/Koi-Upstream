@@ -16,6 +16,7 @@ import team6230.koiupstream.io.UpstreamIO;
  *               be stored.
  * @param name   The logging path/name for this specific extra IO block.
  */
-public record ExtraIO(@SuppressWarnings("rawtypes") UpstreamIO io, LoggableInputs inputs, String name) {
+@SuppressWarnings("rawtypes")
+public record ExtraIO(UpstreamIO io, LoggableInputs inputs, String name) {
 
 }

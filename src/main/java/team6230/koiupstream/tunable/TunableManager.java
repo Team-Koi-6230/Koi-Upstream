@@ -11,6 +11,9 @@ import org.littletonrobotics.junction.networktables.LoggedNetworkBoolean;
 import org.littletonrobotics.junction.networktables.LoggedNetworkNumber;
 import org.littletonrobotics.junction.networktables.LoggedNetworkString;
 
+import edu.wpi.first.networktables.NetworkTableEntry;
+import edu.wpi.first.networktables.NetworkTableInstance;
+
 /**
  * Universal manager for {@code @Tunable} annotations.
  * Automatically links class fields to AdvantageKit/NetworkTables via reflection
@@ -30,24 +33,32 @@ public class TunableManager {
     private interface LoggedValue {
         /**
          * Retrieves the current value from NetworkTables/AdvantageKit.
-         * * @return The current value from the network.
+         * 
+         * @return The current value from the network.
          */
         Object get();
 
         /**
          * Applies the fetched network value to the physical Java field via reflection.
-         * * @param field The reflection {@link Field} being modified.
          * 
+         * @param field  The reflection {@link Field} being modified.
          * @param parent The object instance containing the field.
          * @throws IllegalAccessException If the field cannot be modified.
          */
         void setField(Field field, Object parent) throws IllegalAccessException;
+
+        /**
+         * Publishes the Java value explicitly to NetworkTables so the dashboard sees
+         * it.
+         * 
+         * @param value The value to publish.
+         */
+        void publish(Object value);
     }
 
     /**
      * Represents a live connection between a specific Java field and its
-     * corresponding
-     * NetworkTables/AdvantageKit entry.
+     * corresponding NetworkTables/AdvantageKit entry.
      */
     private static class TunableConnection {
         private final Field field;
@@ -62,6 +73,8 @@ public class TunableManager {
 
             try {
                 this.lastValue = field.get(parent);
+                // EXPLICIT PUBLISH: Push the initial Java value to NetworkTables
+                this.networkValue.publish(this.lastValue);
             } catch (IllegalAccessException e) {
                 e.printStackTrace();
             }
@@ -69,12 +82,20 @@ public class TunableManager {
 
         boolean sync() {
             try {
-                Object currentValue = networkValue.get();
+                Object currentJavaValue = field.get(parent);
+                Object currentNetworkValue = networkValue.get();
 
-                // Compare the current network value with this instance's last known value
-                if (!Objects.equals(currentValue, lastValue)) {
+                // 1. Check if the Robot code internally updated the variable
+                if (!Objects.equals(currentJavaValue, lastValue)) {
+                    networkValue.publish(currentJavaValue);
+                    lastValue = currentJavaValue;
+                    return true;
+                }
+
+                // 2. Check if the user changed the value via the Dashboard (NetworkTables)
+                if (!Objects.equals(currentNetworkValue, lastValue)) {
                     networkValue.setField(field, parent);
-                    lastValue = currentValue;
+                    lastValue = currentNetworkValue;
                     return true;
                 }
             } catch (Exception e) {
@@ -93,9 +114,9 @@ public class TunableManager {
     /**
      * Scans an object for {@code @Tunable} fields and registers them to
      * NetworkTables. Supports double, int, boolean, and String types.
-     * * @param obj The class instance to scan (usually 'this' inside a subsystem
-     * constructor).
      * 
+     * @param obj  The class instance to scan (usually 'this' inside a subsystem
+     *             constructor).
      * @param path The NetworkTables root path (e.g., "/Tuning/Intake/").
      */
     public static void register(Object obj, String path) {
@@ -122,17 +143,18 @@ public class TunableManager {
 
     /**
      * Maps Java fields to the correct AdvantageKit LoggedNetwork type based on
-     * their reflection type.
-     * * @param field The field to evaluate.
+     * their reflection type, and grabs the WPILib NT entry for publishing.
      * 
-     * @param obj  The object instance owning the field.
-     * @param path The full NetworkTables path for this specific field.
+     * @param field The field to evaluate.
+     * @param obj   The object instance owning the field.
+     * @param path  The full NetworkTables path for this specific field.
      * @return A {@link LoggedValue} wrapper for the appropriate AdvantageKit type,
      *         or null if unsupported.
      * @throws IllegalAccessException If the field's initial value cannot be read.
      */
     private static LoggedValue createLoggedValue(Field field, Object obj, String path) throws IllegalAccessException {
         Class<?> type = field.getType();
+        NetworkTableEntry entry = NetworkTableInstance.getDefault().getEntry(path);
 
         if (type == double.class || type == Double.class) {
             var net = new LoggedNetworkNumber(path, field.getDouble(obj));
@@ -143,6 +165,10 @@ public class TunableManager {
 
                 public void setField(Field f, Object p) throws IllegalAccessException {
                     f.setDouble(p, net.get());
+                }
+
+                public void publish(Object value) {
+                    entry.setDouble((Double) value);
                 }
             };
         }
@@ -156,6 +182,10 @@ public class TunableManager {
                 public void setField(Field f, Object p) throws IllegalAccessException {
                     f.setBoolean(p, net.get());
                 }
+
+                public void publish(Object value) {
+                    entry.setBoolean((Boolean) value);
+                }
             };
         }
         if (type == int.class || type == Integer.class) {
@@ -167,6 +197,11 @@ public class TunableManager {
 
                 public void setField(Field f, Object p) throws IllegalAccessException {
                     f.setInt(p, (int) net.get());
+                }
+
+                public void publish(Object value) {
+                    // NT4 utilizes longs for whole numbers internally
+                    entry.setInteger(((Number) value).longValue());
                 }
             };
         }
@@ -180,6 +215,10 @@ public class TunableManager {
                 public void setField(Field f, Object p) throws IllegalAccessException {
                     f.set(p, net.get());
                 }
+
+                public void publish(Object value) {
+                    entry.setString((String) value);
+                }
             };
         }
         return null; // Type not supported
@@ -189,8 +228,8 @@ public class TunableManager {
      * Iterates through all registered fields for a given object and syncs them.
      * Intended to be called periodically (e.g., inside a subsystem's periodic
      * loop).
-     * * @param obj The object instance to check updates for.
      * 
+     * @param obj The object instance to check updates for.
      * @return true if at least one tunable field was updated during this cycle,
      *         false otherwise.
      */

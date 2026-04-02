@@ -70,7 +70,8 @@ public class Superstate extends SubsystemBase {
      * The subsystem will be subscribed to state changes and readiness checks.
      * * @param subsystem The subsystem to add to the superstate manager.
      */
-    public void addSubsystem(UpstreamSubsystem subsystem) {
+    @SuppressWarnings("unchecked")
+    public void addSubsystem(@SuppressWarnings("rawtypes") UpstreamSubsystem subsystem) {
         if (_manager.isDefault()) {
             DriverStation.reportWarning("WARNING: Subsystem manager is using default states", false);
             logger.warning("WARNING: Subsystem manager is using default states");
