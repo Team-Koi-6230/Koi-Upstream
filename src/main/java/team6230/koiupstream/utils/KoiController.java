@@ -4,6 +4,14 @@ import edu.wpi.first.math.MathUtil;
 import edu.wpi.first.math.filter.SlewRateLimiter;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 
+/**
+ * A custom Xbox controller wrapper designed specifically for smooth swerve
+ * drive operations.
+ * It automatically applies deadbands, cubic curve shaping for fine control, and
+ * {@link SlewRateLimiter}s to prevent harsh acceleration or deceleration that
+ * could
+ * damage the robot or cause the wheels to slip.
+ */
 public class KoiController extends CommandXboxController {
 
     // Slew rate limiters have a "memory" of the last speed, so they must be objects
@@ -15,10 +23,16 @@ public class KoiController extends CommandXboxController {
     private final double deadband;
 
     /**
-     * @param port            The driver station port
-     * @param deadband        The joystick deadband (usually 0.05 to 0.1)
-     * @param translationRate Max units per second the translation can change
-     * @param rotationRate    Max units per second the rotation can change
+     * Constructs a new KoiController.
+     *
+     * @param port            The driver station USB port the controller is plugged
+     *                        into.
+     * @param deadband        The joystick deadband (usually 0.05 to 0.1) to ignore
+     *                        stick drift.
+     * @param translationRate The maximum rate of change (units per second) for
+     *                        translational movement.
+     * @param rotationRate    The maximum rate of change (units per second) for
+     *                        rotational movement.
      */
     public KoiController(int port, double deadband, double translationRate, double rotationRate) {
         super(port);
@@ -32,6 +46,9 @@ public class KoiController extends CommandXboxController {
 
     /**
      * Shapes the raw joystick input with a deadband and a cubic curve.
+     * * @param rawValue The raw input axis value from the controller.
+     * 
+     * @return The smoothed and shaped input value.
      */
     private double shapeInput(double rawValue) {
         // 1. Cut off the stick drift
@@ -41,27 +58,40 @@ public class KoiController extends CommandXboxController {
     }
 
     /**
-     * Gets the smoothed forward/backward translation.
-     * WPILib expects Forward to be POSITIVE X. Xbox left Y is negative when pushed
-     * up.
+     * Gets the smoothed forward/backward translation input for the swerve drive.
+     * <p>
+     * <b>Note:</b> WPILib expects Forward to be POSITIVE X. The Xbox left Y-axis
+     * is conventionally negative when pushed up, so this method automatically
+     * negates it.
+     *
+     * @return The rate-limited and shaped forward/backward input.
      */
     public double getSwerveDrive() {
         return translationLimiter.calculate(shapeInput(-getLeftY()));
     }
 
     /**
-     * Gets the smoothed left/right translation.
-     * WPILib expects Left to be POSITIVE Y. Xbox left X is positive when pushed
-     * right.
+     * Gets the smoothed left/right translation input for the swerve drive.
+     * <p>
+     * <b>Note:</b> WPILib expects Left to be POSITIVE Y. The Xbox left X-axis
+     * is conventionally positive when pushed right, so this method automatically
+     * negates it.
+     *
+     * @return The rate-limited and shaped left/right (strafe) input.
      */
     public double getSwerveStrafe() {
         return strafeLimiter.calculate(shapeInput(-getLeftX()));
     }
 
     /**
-     * Gets the smoothed rotation.
-     * WPILib expects Counter-Clockwise to be POSITIVE. Xbox right X is positive
-     * when pushed right.
+     * Gets the smoothed rotation input for the swerve drive.
+     * <p>
+     * <b>Note:</b> WPILib expects Counter-Clockwise to be POSITIVE. The Xbox right
+     * X-axis is conventionally positive when pushed right (clockwise), so this
+     * method
+     * automatically negates it.
+     *
+     * @return The rate-limited and shaped rotational input.
      */
     public double getSwerveTurn() {
         return rotationLimiter.calculate(shapeInput(-getRightX()));
