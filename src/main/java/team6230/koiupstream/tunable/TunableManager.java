@@ -55,25 +55,18 @@ public class TunableManager {
         private final LoggedValue networkValue;
         private Object lastValue; // Tracks the last value for this specific instance
 
-        /**
-         * Constructs a new connection for a tunable field.
-         * * @param field The reflection {@link Field} to link.
-         * 
-         * @param parent       The object instance owning the field.
-         * @param networkValue The AdvantageKit network wrapper.
-         */
         public TunableConnection(Field field, Object parent, LoggedValue networkValue) {
             this.field = field;
             this.parent = parent;
             this.networkValue = networkValue;
+
+            try {
+                this.lastValue = field.get(parent);
+            } catch (IllegalAccessException e) {
+                e.printStackTrace();
+            }
         }
 
-        /**
-         * Syncs the dashboard value to the Java field. Only modifies the field if
-         * the dashboard value has changed to prevent unnecessary reflection overhead.
-         * * @return true if the value has changed since the last check, false
-         * otherwise.
-         */
         boolean sync() {
             try {
                 Object currentValue = networkValue.get();
