@@ -5,6 +5,7 @@ import java.util.Map;
 
 import edu.wpi.first.math.kinematics.ChassisSpeeds;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import team6230.koiupstream.superstates.Superstate;
 import team6230.koiupstream.utils.DriveInputConsumer;
 import team6230.koiupstream.utils.SwerveInputStream;
 
@@ -34,7 +35,7 @@ public abstract class UpstreamDrivebase<S extends Enum<S>> extends SubsystemBase
      */
     public UpstreamDrivebase(SwerveInputStream input) {
         _inputStream = input;
-
+        Superstate.getInstance().addDrivebase(this);
     }
 
     /**
