@@ -1,11 +1,13 @@
 package team6230.koiupstream.superstates;
 
 import java.util.function.BooleanSupplier;
+import java.util.function.Consumer;
 import java.util.logging.Logger;
 
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import team6230.koiupstream.subsystems.UpstreamDrivebase;
 import team6230.koiupstream.subsystems.UpstreamSubsystem;
 
 /**
@@ -65,6 +67,16 @@ public class Superstate extends SubsystemBase {
         _manager = new SuperstateManager<E>(defaultState);
     }
 
+    @SuppressWarnings({ "unchecked", "rawtypes" })
+    public <E extends Enum<E>> void subscribeToStateMachine(Consumer<E> callback, BooleanSupplier isReady) {
+        if (_manager.isDefault()) {
+            DriverStation.reportWarning("WARNING: Subsystem manager is using default states", false);
+            logger.warning("WARNING: Subsystem manager is using default states");
+        }
+
+        _manager.subscribe((Consumer) callback, isReady);
+    }
+
     /**
      * Registers an {@link UpstreamSubsystem} to be managed by the Superstate.
      * The subsystem will be subscribed to state changes and readiness checks.
@@ -72,12 +84,12 @@ public class Superstate extends SubsystemBase {
      */
     @SuppressWarnings("unchecked")
     public void addSubsystem(@SuppressWarnings("rawtypes") UpstreamSubsystem subsystem) {
-        if (_manager.isDefault()) {
-            DriverStation.reportWarning("WARNING: Subsystem manager is using default states", false);
-            logger.warning("WARNING: Subsystem manager is using default states");
-        }
+        subscribeToStateMachine(subsystem::handleSuperstate, subsystem::isReady);
+    }
 
-        _manager.subscribe(subsystem::handleSuperstate, subsystem::isReady);
+    @SuppressWarnings("unchecked")
+    public void addDrivebase(@SuppressWarnings("rawtypes") UpstreamDrivebase subsystem) {
+        subscribeToStateMachine(subsystem::handleSuperstate, subsystem::isReady);
     }
 
     /**

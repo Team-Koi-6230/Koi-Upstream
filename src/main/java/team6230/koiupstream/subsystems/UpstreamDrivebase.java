@@ -5,7 +5,6 @@ import java.util.Map;
 
 import edu.wpi.first.math.kinematics.ChassisSpeeds;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
-import team6230.koiupstream.superstates.Superstate;
 import team6230.koiupstream.utils.DriveInputConsumer;
 import team6230.koiupstream.utils.SwerveInputStream;
 
@@ -23,6 +22,9 @@ public abstract class UpstreamDrivebase<S extends Enum<S>> extends SubsystemBase
 
     private Map<S, DriveInputConsumer> _driveModes = new HashMap<>();
     private DriveInputConsumer _defaultDrive;
+    private DriveInputConsumer _currentDrive;
+
+    private boolean superstateMode = true;
 
     /**
      * Constructs a new UpstreamDrivebase.
@@ -32,7 +34,26 @@ public abstract class UpstreamDrivebase<S extends Enum<S>> extends SubsystemBase
      */
     public UpstreamDrivebase(SwerveInputStream input) {
         _inputStream = input;
+
     }
+
+    /**
+     * Triggered by the Superstate manager to execute the reaction mapped to the
+     * given state.
+     *
+     * @param state The current or wanted Superstate being evaluated.
+     */
+    public final void handleSuperstate(S state) {
+        if (!superstateMode)
+            return;
+        _currentDrive = _driveModes.getOrDefault(state, _defaultDrive);
+    }
+
+    public final void setSuperstateMode(boolean superstateMode) {
+        this.superstateMode = superstateMode;
+    }
+
+    public abstract boolean isReady();
 
     /**
      * Registers the fallback driving mode. This mode is used if the current
@@ -42,6 +63,7 @@ public abstract class UpstreamDrivebase<S extends Enum<S>> extends SubsystemBase
      */
     protected void registerDefaultDrive(DriveInputConsumer di) {
         this._defaultDrive = di;
+        this._currentDrive = this._defaultDrive;
     }
 
     /**
@@ -77,11 +99,9 @@ public abstract class UpstreamDrivebase<S extends Enum<S>> extends SubsystemBase
         }
 
         updateInputs();
-        var currentWantedState = Superstate.getInstance().getWantedSuperstate();
 
-        DriveInputConsumer driveMethod = _driveModes.getOrDefault(currentWantedState, _defaultDrive);
-
-        ChassisSpeeds wantedChassisSpeed = driveMethod.accept(_inputStream.x(), _inputStream.y(), _inputStream.omega());
+        ChassisSpeeds wantedChassisSpeed = _currentDrive.accept(_inputStream.x(), _inputStream.y(),
+                _inputStream.omega());
 
         if (wantedChassisSpeed == null) {
             wantedChassisSpeed = new ChassisSpeeds();
