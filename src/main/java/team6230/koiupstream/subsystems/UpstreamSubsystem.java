@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Queue;
+import java.util.function.BooleanSupplier;
 
 import org.littletonrobotics.junction.Logger;
 import org.littletonrobotics.junction.inputs.LoggableInputs;
@@ -95,6 +96,18 @@ public abstract class UpstreamSubsystem<S extends Enum<S>, io extends UpstreamIO
     }
 
     /**
+     * Registers an additional IO block to be updated and logged alongside the core
+     * IO.
+     * 
+     * @param io     {@link ExtraIO} constractor parameter
+     * @param inputs {@link ExtraIO} constractor parameter
+     * @param name   {@link ExtraIO} constractor parameter
+     */
+    protected final void addAnExtraIO(@SuppressWarnings("rawtypes") UpstreamIO io, LoggableInputs inputs, String name) {
+        addAnExtraIO(new ExtraIO(io, inputs, name));
+    }
+
+    /**
      * Abstract method called periodically to handle subsystem-specific logic.
      */
     public abstract void update();
@@ -147,6 +160,17 @@ public abstract class UpstreamSubsystem<S extends Enum<S>, io extends UpstreamIO
     }
 
     /**
+     * Queues a conditional action to be evaluated periodically.
+     * 
+     * @param condition {@link ConditionalAction} constructor parameter
+     * @param Action    {@link ConditionalAction} constructor parameter
+     * 
+     */
+    protected final void registerConditionalAction(BooleanSupplier condition, Runnable Action) {
+        registerConditionalAction(new ConditionalAction(condition, Action));
+    }
+
+    /**
      * Requests that all currently queued and active conditional actions be cleared.
      */
     protected final void clearConditionalActions() {
@@ -161,16 +185,6 @@ public abstract class UpstreamSubsystem<S extends Enum<S>, io extends UpstreamIO
     @SuppressWarnings("unchecked")
     protected final ArrayList<ConditionalAction> getConditionalActions() {
         return (ArrayList<ConditionalAction>) conditionalActions.clone();
-    }
-
-    /**
-     * Queues a specific conditional action to be removed from the active list.
-     *
-     * @param removedAction The {@link ConditionalAction} to remove.
-     */
-    protected final void removeConditionalAction(ConditionalAction removedAction) {
-        removeQueue.add(removedAction);
-
     }
 
     /**
